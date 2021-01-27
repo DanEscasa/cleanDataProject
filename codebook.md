@@ -123,6 +123,7 @@ features <- features %>%
     mutate(Feature.Variable = gsub("(^|[\\.])([[:alpha:]])", "\\1\\U\\2", 
                     Feature.Variable, perl=TRUE))
 ```
+**mutate() rocks!**
 
 ## Loading the activities
 
