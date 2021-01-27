@@ -1,33 +1,20 @@
-# ---
-#      title: "run_analysis"
-# author: "Daniel Escasa"
-# date: "January 25, 2021"
-# output: 
-#      html_document:
-#      number_sections: true
-# ---
-     
-#      ```{r setup, include=TRUE}
-# knitr::opts_chunk$set(echo = TRUE)
-# ```
-# Introduction {-}
-#The run_analysis.R script downloads the Human Activity Recognition dataset, tidies it up, and performs various required data manipulations and summaries.<p>
-     
-     # Boring admin stuff
-     ## Install dplyr if necessary
- #    ```{r, load dplyr}
+
+#The run_analysis.R script downloads the Human Activity Recognition dataset, tidies it up, and performs various
+# required data manipulations and summaries.<p>
+ 
+# Boring admin stuff
+## Install dplyr if necessary
+
 if (!require("dplyr")) {
      message("Installing dplyr")
      install.packages("dplyr")
 }
-#```
-## Make sure I'm in the right directory
-#```{r}
+
 setwd("/home/daniel/Documents/Coursera/DataCleaning.JH/")
-utils::sessionInfo()[2]
-#```
+print(utils::sessionInfo()[2])
+
 ## Download Human Activity Report dataset if necessary
-#```{r, dl HAR dataset}
+
 if (!file.exists("./UCI_HAR_Dataset.zip")) {
      message("Downloading dataset")
      download.file("https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip", 
@@ -35,16 +22,16 @@ if (!file.exists("./UCI_HAR_Dataset.zip")) {
                    method = "internal", 
                    mode = "wb")
 }
-#```
+
 ## Extract Human Activity Report dataset if necessary
 #I've decided to extract it to my DataCleaning.JH directory instead of a DATA directory.
-#```{r, extract HAR dataset}
+
 if (!file.exists("./UCI HAR Dataset")) {
 message("Extracting dataset")
 unzip("./UCI_HAR_Dataset.zip", 
 overwrite = FALSE)
 }
-#```
+
 # Load the features
 #First line (`tibble:as_tibbl()`) reads in `features.txt` and coerces it as a data frame.<p>
 ## Search for the mean and standard deviations
@@ -101,30 +88,28 @@ col.names = c("Id", "Activity")))
 ## Assign `features` dataset to `train` column names 
 ## Add subject data and activity data to the training dataset
 # ```{r load training dataset}
-train <- tibble::as_tibble(read.table("./UCI HAR Dataset/train/X_train.txt"))
+train           <- tibble::as_tibble(read.table("./UCI HAR Dataset/train/X_train.txt"))
 colnames(train) <- features$Feature.Variable
-train <- cbind(
-rename(tibble::as_tibble(read.table("./UCI HAR Dataset/train/subject_train.txt")), 
-Subject.Id = V1),
-rename(tibble::as_tibble(read.table("./UCI HAR Dataset/train/y_train.txt")),
-Activity.Id = V1),
-Dataset.Partition = c("Training"),
-train)
+train           <- cbind(rename(tibble::as_tibble(read.table("./UCI HAR Dataset/train/subject_train.txt")),
+                                Subject.Id = V1),
+                         rename(tibble::as_tibble(read.table("./UCI HAR Dataset/train/y_train.txt")),
+                                Activity.Id = V1),
+                         Dataset.Partition = c("Training"),
+                         train)
 # ```
 # Load the test dataset
 ## Assign `features` dataset to `test` column names 
 ## Add subject data, and activity data to the test dataset<p>
 # Mostly the same as the previous chunk, applied to the `test` dataset
 # ```{r load test dataset}
-test <- tibble::as_tibble(read.table("./UCI HAR Dataset/test/X_test.txt"))
+test           <- tibble::as_tibble(read.table("./UCI HAR Dataset/test/X_test.txt"))
 colnames(test) <- features$Feature.Variable
-test <- cbind(
-rename(tibble::as_tibble(read.table("./UCI HAR Dataset/test/subject_test.txt")), 
-Subject.Id = V1),
-rename(tibble::as_tibble(read.table("./UCI HAR Dataset/test/y_test.txt")),
-Activity.Id = V1),
-Dataset.Partition = c("Test"),
-test)
+test           <- cbind(rename(tibble::as_tibble(read.table("./UCI HAR Dataset/test/subject_test.txt")), 
+                               Subject.Id = V1),
+                        rename(tibble::as_tibble(read.table("./UCI HAR Dataset/test/y_test.txt")),
+                               Activity.Id = V1),
+                        Dataset.Partition = c("Test"),
+                        test)
 # ```
 # Merge the training and test datasets.
 ## Add descriptive activity names from activities.
@@ -133,11 +118,10 @@ test)
 # ```{r merge training and test}
 merged <- rbind(train, test) %>%
 left_join(activities, by = c("Activity.Id" = "Id")) %>%
-select(Subject.Id, Activity,   
-one_of(
-filter(features, Is.Mean == TRUE | Is.Std == TRUE) %>%
-select(Feature.Variable) %>% .[["Feature.Variable"]])) %>%
-group_by(Subject.Id, Activity)
+     select(Subject.Id, Activity,
+            one_of(filter(features, Is.Mean == TRUE | Is.Std == TRUE) %>%
+                        select(Feature.Variable) %>% .[["Feature.Variable"]])) %>%
+     group_by(Subject.Id, Activity)
 # ```
 # Create a tidy summary of feature means grouped by subject and activity.
 # ```{r create tidy summary}

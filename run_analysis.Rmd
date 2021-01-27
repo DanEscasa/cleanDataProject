@@ -1,7 +1,7 @@
 ---
 title: "run_analysis"
 author: "Daniel Escasa"
-date: "January 25, 2021"
+date: "`r Sys.Date()`"
 output: 
      html_document:
           number_sections: true
@@ -51,18 +51,14 @@ First line (`tibble:as_tibbl()`) reads in `features.txt` and coerces it as a dat
 The first two calls to `mutate()` do this.<p>
 ## Create syntactically valid names in a new features column named `Features`
 ## Fix variable names from the features data frame
-Succeeding `mutate()` function invocations do this. One aim is enhanced readability, e.g., `Time.BodyGyro-arCoeff()-X,2` instead of `tBodyGyro-arCoeff()-X,2`. More precisely:<p>
-1. Features starting with a lowercase t are converted to `Time.`, e.g., `tBodyGyro-arCoeff()-X,2` becomes Time.BodyGyro-arCoeff()-X,2.<p>
-1. Occurrences of `.t` anywhere in a feature$Features string are transformed to `.Time`.<p>
-1. Same with features that begin with f, converted to `Frequency.`, e.g., `fBodyAcc-bandsEnergy()-1,24` becomes `Frequency.BodyAcc-bandsEnergy()-1,24`.<p>
-1. Occurrences of `.f` anywhere in a feature$Features string are transformed to `.Frequency`.<p>
-1. Features that begin with `angle.` start with `Angle.` after the `mutate()`.<p>
-1. Double occurrences of `Body` — i.e., `BodyBody` become `Body`<p>
-1. Occurrences of `Acc`, `Gyro`, `Jerk`, and `Mag` are transformed to `.Acc`, `.Gyro`, `.Jerk`, and `.Mag`, respectively.<p>
-1. Occurrences of a multiple dots `..` are transformed to a single dot `.`. It may take two calls to `gsub()` to do this.<p>
-1. Features with a trailing period `.` lose that period.<p>
-1. Lastly, characters that cannot be part of an R identifier are removed. These include the open and close parentheses and square brackets.<p>
-     Strangely, this may not be necessary since R accepted `train[, "tBodyAcc-mean()-X"]`. Nevertheless… Maybe for backward compatibility?<p>
+Succeeding `mutate()` function invocations do this. One aim is enhanced readability, e.g., `Time.BodyGyro-arCoeff()-X,2` instead of `tBodyGyro-arCoeff()-X,2`. More precisely, `mutate()` will accomplish the following:<p>
+1. determine the features that signify means and standard deviations.
+1. replace the prefixes `t` and `f` with more descriptive `Time` and `Frequency`, respectively
+1. replace “angle” with “Angle” for consistency in capitalization
+1. replace double occurrences of “Body” — i.e., “BodyBody” — with “Body”
+1. separate “Acc”, “Gyro”, “Jerk”, and “Mag” from the rest of the feature with dots — i.e., “.Acc”, “.Gyro”, “.Jerk”, and “.Mag”
+1. replace double occurrences of the dot (“..”) with a single dot
+1. remove a dot at the end of the feature.
 
 ```{r load features}
 features <- tibble::as_tibble(read.table("./UCI HAR Dataset/features.txt", 
@@ -91,7 +87,7 @@ features <- features %>%
 ## mutate() rocks! {-}
 
 # Load activities
-As in the previous chunk, `tibble:as_tibbl()` reads in `labels.txt` and coerces it as a data frame. The data frame gets assigned column names "Id" and "Activity"
+As in the previous chunk, `tibble:as_tibbl(read.table())` reads in `labels.txt` and coerces it as a data frame. The data frame gets assigned column names "Id" and "Activity"
 ```{r load activities}
 activities <- tibble::as_tibble(read.table("./UCI HAR Dataset/activity_labels.txt", 
                col.names = c("Id", "Activity")))
