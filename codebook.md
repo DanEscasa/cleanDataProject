@@ -1,7 +1,7 @@
 ---
 title: "Codebook"
 author: "Daniel Escasa"
-date: "`r Sys.Date()`"
+date: "2021 January 27"
 output: 
      html_document:
           number_sections: true
