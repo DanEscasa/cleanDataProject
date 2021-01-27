@@ -33,7 +33,7 @@ overwrite = FALSE)
 }
 
 # Load the features
-#First line (`tibble:as_tibbl()`) reads in `features.txt` and coerces it as a data frame.<p>
+#First line (`tibble:as_tibble()`) reads in `features.txt` and coerces it as a data frame.<p>
 ## Search for the mean and standard deviations
 # The first two calls to `mutate()` do this.<p>
 ## Create syntactically valid names in a new features column named `Features`
