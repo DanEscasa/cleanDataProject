@@ -50,7 +50,7 @@ and in the `Inertial Signals` directory:
 -rw-r--r-- 1 daniel daniel 6041350 Nov 29  2012 total_acc_y_test.txt
 -rw-r--r-- 1 daniel daniel 6041350 Nov 29  2012 total_acc_z_test.txt
 ```
-The structure of the `UCI HAR Dataset\train` directory is similar with the files named `*train` instead of `*test`.<p>
+The structure of the `UCI HAR Dataset/train` directory is similar with the files named `*train` instead of `*test`.<p>
 1. The file `activity_labels.txt`, as the name implies, is the file of labels of the activities, i.e.:
 ```
 $ cat activity_labels.txt
