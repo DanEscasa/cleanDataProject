@@ -87,7 +87,7 @@ $ cat activity_labels.txt
 ```
 + Further down are features that begin with `f`. As explained in`features_info`, the `t` and `f` prefixes refer to time and frequency domains, respectively.
 + Note that the first three contain the string “mean”, the next three “std”. Those signify that those features will produce the means and standard deviations, respectively, of the measurements.
-+ Finally, the dataset consists of text files, which means that we have to use `tibble::as_tibble(read.table())` and provide column names. `tibble::as_tibble(read.table())` will turn the file into a data frame.<p>
++ Finally, the dataset consists of text files, which means that we have to use `tibble::as_tibble(read.table())` and provide column names to enable us to treat the file as data frame.<p>
 
 # Massaging the data files
 
