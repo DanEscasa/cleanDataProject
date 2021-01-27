@@ -125,15 +125,17 @@ features <- features %>%
 ```
 
 ## Loading the activities
-     This is a simple matter of invoking `tibble::as_tibble(read.table())` on `activity_labels.txt`, and assigning column names.<p>
+
+This is a simple matter of invoking `tibble::as_tibble(read.table())` on `activity_labels.txt`, and assigning column names.<p>
 ## Loading the training dataset
-     This consists of four steps:
+This consists of four steps:
 1. setting `train` column names to the rows of `features` dataset
 1. adding subject data and activity data to the training dataset
 1. renaming the V1 columns to `Subject.Id` in `subject_training.txt` and to `Activity.Id` in y_training.txt
 1. combining the two txt files above with `cbind()`<p>
 
 ## Loading the test dataset
+
 Activity here is the same as in the previous section, applied to the test dataset.<p>
 
 ## Merge the training and test datasets
