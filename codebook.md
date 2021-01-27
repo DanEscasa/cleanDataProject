@@ -101,7 +101,8 @@ Examining the `features` file reveals some work to be done:<p>
 1. separating “Acc”, “Gyro”, “Jerk”, and “Mag” from the rest of the feature with dots — i.e., “.Acc”, “.Gyro”, “.Jerk”, and “.Mag”
 1. replacing double occurrences of the dot (“..”) with a single dot
 1. removing a dot at the end of the feature.
-     + This long function chain performs this
+
+This long function chain performs this
 ```
 features <- features %>% 
     mutate(Is.Mean          = grepl("mean\\(\\)", features$Feature)) %>%
@@ -144,6 +145,7 @@ This consists of the following steps:
 1. adding descriptive activity names from activities
 1. selecting the mean and std deviation features only.
 1. grouping by subject and activity.
+1. merging the training and test datasets using rbind() into a `merged` dataset
 
 ## Creating the tidy summary
 The `summary()` function, applied to the `merged` training and test databases from the previous section, will create the required `tidy_summary` file.
