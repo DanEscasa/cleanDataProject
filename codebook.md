@@ -31,7 +31,7 @@ The dataset is a [zip file](https://d396qusza40orc.cloudfront.net/getdata%2Fproj
 drwx------ 3 daniel daniel   4096 Nov 29  2012 test
 drwx------ 3 daniel daniel   4096 Nov 29  2012 train
 ```
-In `UCI HAR Dataset\test` are the following files:
+In `UCI HAR Dataset/test` are the following files:
 ```
 drwx------ 2 daniel daniel     4096 Nov 29  2012 'Inertial Signals'
 -rw-r--r-- 1 daniel daniel     7934 Nov 29  2012  subject_test.txt
@@ -129,6 +129,7 @@ features <- features %>%
 ## Loading the activities
 
 This is a simple matter of invoking `tibble::as_tibble(read.table())` on `activity_labels.txt`, and assigning column names.<p>
+
 ## Loading the training dataset
 This consists of four steps:
 1. setting `train` column names to the rows of `features` dataset
