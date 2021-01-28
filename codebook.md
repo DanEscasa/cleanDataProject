@@ -131,7 +131,7 @@ features <- features %>%
 This is a simple matter of invoking `tibble::as_tibble(read.table())` on `activity_labels.txt`, and assigning column names.<p>
 
 ## Loading the training dataset
-This consists of four steps:
+This consists of four steps:<p>
 1. setting `train` column names to the rows of `features` dataset
 1. adding subject data and activity data to the training dataset
 1. renaming the V1 columns to `Subject.Id` in `subject_training.txt` and to `Activity.Id` in y_training.txt
@@ -142,7 +142,7 @@ This consists of four steps:
 Activity here is the same as in the previous section, applied to the test dataset.<p>
 
 ## Merge the training and test datasets
-This consists of the following steps:
+This consists of the following steps:<p>
 1. adding descriptive activity names from activities
 1. selecting the mean and std deviation features only.
 1. grouping by subject and activity.
